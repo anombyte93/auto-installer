@@ -9,7 +9,7 @@ Works with Claude Code, ChatGPT, Codex, Aider, or any AI tool with shell access.
 ### 1. Clone this repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/auto-installer.git
+git clone https://github.com/anombyte93/auto-installer.git
 cd auto-installer
 ```
 
