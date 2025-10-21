@@ -26,7 +26,7 @@ Have an idea? Open an issue with:
 1. **Fork the repository**
 2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
 3. **Test your changes** with realistic scenarios
-4. **Update documentation** if needed
+4. **Update documentation** if needed (SKILL.md, EXAMPLES.md)
 5. **Commit your changes** (`git commit -m 'Add amazing feature'`)
 6. **Push to the branch** (`git push origin feature/amazing-feature`)
 7. **Open a Pull Request**
@@ -36,39 +36,82 @@ Have an idea? Open an issue with:
 ### Testing New Features
 
 Test with at least 3 scenarios:
-1. **Simple**: Basic package installation
-2. **Complex**: Multi-package, multi-target
-3. **Edge Case**: Jump hosts, GPU, version-specific, etc.
+1. **Simple**: Basic package installation (e.g., single package on local system)
+2. **Complex**: Multi-package, multi-target (e.g., several packages on multiple VMs)
+3. **Edge Case**: Jump hosts, GPU, version-specific requirements, etc.
 
-### Code Quality
+### Code Quality Standards
 
-- Maintain autonomous execution (no manual steps)
+- Maintain autonomous execution (no manual steps for users)
 - Add comprehensive error recovery
 - Include verification tests
 - Update SKILL.md with new capabilities
+- Add examples to EXAMPLES.md
 
 ### Documentation
 
-- Update README.md with new features
-- Add examples for new use cases
-- Document any new requirements
-
-## Tournament Methodology
-
-This project uses tournament-based optimization:
-1. Create variations of the feature
-2. Test with realistic scenarios
-3. Compare using weighted evaluation
-4. Iterate until convergence
-
-If adding major features, consider running a mini-tournament to validate quality.
+When adding features, update:
+- **SKILL.md**: Add implementation details with bash commands
+- **EXAMPLES.md**: Add real-world usage examples
+- **README.md**: Update feature list if needed
+- **CHANGELOG.md**: Document changes
 
 ## Quality Standards
 
+**Priorities:**
 - **Correctness** > Speed
 - **Safety** > Convenience
 - **Autonomy** > User interaction
 - **Transparency** > Abstraction
+- **Robustness** > Simplicity
+
+## Testing Checklist
+
+Before submitting a PR, verify:
+- [ ] Feature works on target platforms (Linux/macOS/Windows)
+- [ ] Error handling is comprehensive
+- [ ] All commands execute autonomously
+- [ ] Installation is verified functionally
+- [ ] Documentation is updated
+- [ ] Examples are added
+- [ ] No manual user intervention required
+
+## Examples of Good Contributions
+
+### Adding Package Support
+```markdown
+**What**: Add support for Terraform CLI installation
+**Testing**:
+- Simple: Install terraform on local Ubuntu
+- Complex: Install terraform on multiple VMs
+- Edge: Install specific version of terraform
+**Documentation**:
+- Updated SKILL.md with terraform detection
+- Added terraform verification commands
+- Added example to EXAMPLES.md
+```
+
+### Improving Error Recovery
+```markdown
+**What**: Better handling of GPG key failures
+**Testing**:
+- Simulate GPG key failure
+- Verify automatic retry with alternative method
+**Documentation**:
+- Updated error recovery section in SKILL.md
+- Added troubleshooting note in README.md
+```
+
+### Adding Target Support
+```markdown
+**What**: Add support for Podman containers
+**Testing**:
+- Install packages in podman containers
+- Verify detection works
+**Documentation**:
+- Updated target detection in SKILL.md
+- Added podman examples to EXAMPLES.md
+```
 
 ## Questions?
 
