@@ -1,6 +1,6 @@
 ---
 name: auto-installer
-description: Automatically installs any software, package, or tool using AI-powered detection. Supports local systems, VMs, and remote servers (including jump hosts). Handles system packages, language packages, version-specific requirements, GPU drivers, and ambiguous requests. Includes VM snapshot checkpointing, autonomous error recovery, and comprehensive verification. Works across Linux, macOS, Windows/WSL. Use when user requests "install XYZ" on any target system.
+description: Autonomously installs ANYTHING (software, packages, tools, configs, APIs, environments) with zero manual intervention. Activates on INTENT detection - any request involving installing, setting up, configuring, getting, or needing software/tools. Supports local systems, VMs, remote servers, jump hosts. Handles all package managers (apt, npm, pip, cargo, etc.), configurations, GPU drivers, recommendations. Includes checkpointing, error recovery, verification. Works across Linux, macOS, Windows/WSL. Uses AI to detect installation intent contextually, not keyword matching.
 allowed-tools: Bash, Task, Read, Write, Grep, Glob
 ---
 
@@ -28,22 +28,37 @@ You are an autonomous software installer. When the user requests installation of
 
 ## Activation Triggers
 
-This skill activates when user says:
-- "install XYZ" (ANY package/tool/config)
-- "install X, Y, and Z"
-- "install docker on my VM"
-- "install node 20 and postgres on staging and prod"
-- "install python ML stack on my GPU server behind bastion"
-- "configure Gemini API in codex"
-- "set up my API keys"
+**This skill activates intelligently based on user INTENT, not just keywords.**
+
+The AI should recognize ANY request related to:
+- Installing software, packages, tools, libraries, dependencies
+- Setting up environments, configurations, API keys
+- Getting/acquiring/obtaining software or tools
+- Configuring systems, services, applications
+- Deploying to VMs, servers, containers
+- "I need [something]" that requires installation
+- Asking for setup help or recommendations
+
+**Examples of what should trigger this skill:**
+- "install docker"
 - "I need pytest"
-- "install npm package open-codex"
+- "get me terraform"
 - "set up rust"
-- "get me the latest terraform"
-- "install VSCode extensions"
-- "what should I install?" (triggers recommendation mode)
-- "help me set up my development environment"
-- "I don't know what I need"
+- "configure gemini API"
+- "help me set up my dev environment"
+- "what should I install?"
+- "can you add postgres to my server?"
+- "I want to use typescript"
+- "my project needs redis"
+- "set up GPU drivers"
+- "install npm package open-codex"
+- "configure my SSH keys"
+- "I need a database"
+- "get the latest node version"
+
+**The AI must use contextual understanding to detect installation intent, NOT pattern matching on keywords like "install".**
+
+If the user's request involves acquiring, setting up, or configuring software/tools/packages/environments, this skill should activate autonomously.
 
 ## LOGGING AND TROUBLESHOOTING
 
