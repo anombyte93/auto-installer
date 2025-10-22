@@ -2,50 +2,85 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![AI Tool Compatible](https://img.shields.io/badge/AI-Compatible-brightgreen.svg)](https://github.com/anombyte93/auto-installer)
-[![Claude Code](https://img.shields.io/badge/Claude-Code-blue.svg)](https://claude.ai/code)
 
-**Autonomous AI agent that installs any software package on any system with zero manual intervention.**
+**Autonomous AI agent that installs ANYTHING on any system with zero manual intervention.**
 
-Works with Claude Code, ChatGPT, Codex, Aider, or any AI tool with shell access.
+Handles system packages, npm/pip/cargo packages, API configurations, environment setup, VM deployments, and more.
 
 ## Quick Start
-
-### 1. Clone this repository
 
 ```bash
 git clone https://github.com/anombyte93/auto-installer.git
 cd auto-installer
 ```
 
-### 2. Use with your AI tool
+Then use with any AI tool below ⬇️
 
-#### Option A: Claude Code (Skill)
+## 🤖 AI Tool Compatibility
+
+| Tool | Type | Installation | Status |
+|------|------|--------------|--------|
+| [Claude Code](https://claude.com/code) | CLI Skill | `cp -r . ~/.claude/skills/auto-installer/` | ✅ Native |
+| [Open Codex](https://github.com/ymichael/open-codex) | CLI Agent | See below | ✅ Full |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | CLI Agent | See below | ✅ Full |
+| [Grok CLI](https://github.com/superagent-ai/grok-cli) | CLI Agent | See below | ✅ Full |
+| [OpenAI Codex](https://github.com/openai/codex) | CLI Agent | See below | ✅ Full |
+| [Continue.dev](https://www.continue.dev/) | IDE Extension | VSCode/JetBrains | ✅ Full |
+| [Aider](https://aider.chat/) | CLI Agent | See below | ✅ Full |
+| ChatGPT CLI | CLI | N/A | ✅ Full |
+| Any AI with shell access | Custom | Paste SKILL.md | ✅ Universal |
+
+## 📦 Installation by Tool
+
+### Claude Code (Skill System)
 
 ```bash
-# Copy to Claude Code skills directory
+# Install as a skill
 cp -r . ~/.claude/skills/auto-installer/
 
-# The skill auto-activates when you say:
+# Auto-activates when you say:
 # "install docker"
+# "configure gemini API in open-codex"
 # "install pytest on my ubuntu VM"
 ```
 
-#### Option B: Any AI CLI Tool (Aider, ChatGPT CLI, Codex, etc.)
+### CLI Tools (Open Codex, Gemini CLI, Grok CLI, Codex, Aider)
+
+**All CLI tools follow the same pattern:**
 
 ```bash
-# Start your AI tool in this directory
+cd auto-installer
+
+# Start your AI CLI tool
+open-codex          # or
+gemini-cli          # or
+grok-cli            # or
+codex               # or
 aider
 
-# Or with context flag
-chatgpt --context SKILL.md
-
-# Then tell the AI:
-# "Read SKILL.md and install docker for me"
+# Tell the AI:
+"Read SKILL.md and install [WHAT YOU WANT]"
 ```
 
-#### Option C: Direct Prompt
+**Tool-Specific Context Flags (if supported):**
 
-Copy-paste this to any AI with shell access:
+```bash
+# Gemini CLI
+gemini-cli --context SKILL.md
+
+# Some tools auto-read files in directory
+open-codex  # Automatically detects SKILL.md
+```
+
+### Continue.dev (IDE Extension)
+
+1. Install Continue extension in VSCode/JetBrains
+2. Open the auto-installer directory in your IDE
+3. Use Continue chat: `@SKILL.md install docker`
+
+### Universal Method (Any AI)
+
+Paste this prompt to any AI with shell access:
 
 ```
 You are an autonomous software installer. Read the file SKILL.md in the current directory to understand your capabilities and workflow.
@@ -58,164 +93,120 @@ CRITICAL RULES:
 Now install: [WHAT YOU WANT TO INSTALL]
 ```
 
-## What It Does
+## 🎯 What It Does
 
-✅ **Auto-detects** what to install (docker, pytest, node 20, etc.)
-✅ **Auto-configures** VMs (SSH, mount points, snapshots)
-✅ **Handles jump hosts** for remote servers
-✅ **Installs GPU drivers** with automatic reboot
-✅ **Creates checkpoints** for safety
-✅ **Recovers from errors** automatically
-✅ **Verifies everything** actually works
+✅ **Auto-detects** installation type (system pkg, npm, API config, etc.)
+✅ **System packages** - docker, postgresql, redis, nginx, etc.
+✅ **Language packages** - npm, pip, cargo, gem, composer, go
+✅ **API configurations** - Set API keys, create config files
+✅ **Environment setup** - PATH, .bashrc, .env files
+✅ **VMs & remote servers** - Auto-configures SSH, jump hosts
+✅ **GPU drivers** - NVIDIA drivers + nvidia-docker with reboot
+✅ **Safety checkpoints** - VM snapshots before changes
+✅ **Error recovery** - Automatic retry with fixes
+✅ **Verification** - Functional tests, not just binary checks
 
-## Examples
+## 💡 Examples
 
-### Simple
+### System Packages
 ```
 install docker
-```
-
-### With Version
-```
 install node 20 and postgres 15
+install rust
 ```
 
-### On a VM
+### NPM/Language Packages
+```
+install npm package open-codex
+install pytest and numpy
+install ruby gem rails
+```
+
+### API & Configuration
+```
+configure gemini API in open-codex
+set up my AWS credentials
+create .env file with DATABASE_URL
+```
+
+### VM & Remote
 ```
 install pytest on my ubuntu VM
-```
-
-### Multiple VMs
-```
-install docker and redis on staging and production VMs
-```
-
-### Remote Server via Jump Host
-```
+install docker on staging and production VMs
 install rust on gpu-server.company.com via bastion.company.com
 ```
 
-### GPU Server with ML Stack
+### GPU & ML
 ```
 install docker with GPU support and pytorch on my GPU server
 ```
 
-## Supported Targets
+## 📚 Supported Installation Types
 
+### System Packages
+- **Package Managers**: apt, brew, dnf, pacman, choco
+- **Examples**: docker, postgresql, redis, nginx, git, curl, vim
+
+### Language Package Managers
+- **Python**: pip, pip3, pipx, poetry
+- **Node.js**: npm, yarn, pnpm, bun
+- **Ruby**: gem, bundler
+- **Rust**: cargo, rustup
+- **Go**: go install, go get
+- **PHP**: composer
+- **Perl**: cpan
+- **Java**: maven, gradle
+
+### Development Tools
+- **Version Managers**: nvm, pyenv, rbenv
+- **CLI Tools**: gh, kubectl, terraform, ansible, aws-cli
+- **IDEs**: VSCode extensions (`code --install-extension`)
+- **Desktop Apps**: snap, flatpak, AppImage, Homebrew Cask
+
+### Configuration & Setup
+- **API Keys**: Environment variables, config files
+- **Config Files**: JSON, TOML, YAML creation/editing
+- **Environment**: PATH, .bashrc, .zshrc, .env files
+- **SSH Keys**: Generation and configuration
+
+### Deployment Targets
 - **Local system** - Direct installation
-- **VMs** - Auto-detects VirtualBox/VMware/Parallels
+- **VMs** - VirtualBox, VMware, Parallels (auto-detects)
 - **Remote servers** - Via SSH
-- **Jump hosts** - Configures multi-hop SSH automatically
-- **Containers** - Docker/Kubernetes pods
+- **Jump hosts** - Multi-hop SSH configuration
+- **Containers** - Docker, Kubernetes pods
 
-## Supported Packages
+### Specialized
+- **GPU Drivers**: NVIDIA drivers + nvidia-docker
+- **ML/Data Science**: PyTorch, TensorFlow, CUDA
+- **Language Runtimes**: python, node, ruby, go, rust, java, php
 
-- **System packages**: docker, postgresql, redis, nginx, git, curl, vim, etc.
-- **Language runtimes**: python, node, ruby, go, rust, java, php
-- **Language packages**: npm, pip, cargo, gem packages
-- **CLI tools**: gh, kubectl, terraform, ansible, aws-cli
-- **GPU drivers**: NVIDIA drivers + nvidia-docker
-- **ML/Data Science**: pytorch, tensorflow, numpy, pandas, jupyter
+## 🔧 How It Works
 
-## How It Works
+1. **Parse** - AI detects package type and target system
+2. **Configure** - Sets up SSH/VMs if needed
+3. **Checkpoint** - Creates VM snapshot or system backup
+4. **Install** - Uses appropriate package manager
+5. **Verify** - Runs functional tests (not just checks if binary exists)
+6. **Report** - Confirms "READY TO USE" with versions
 
-1. **Detects** package type and target system
-2. **Configures** SSH/VMs if needed
-3. **Creates checkpoint** (VM snapshot or backup)
-4. **Installs** packages with appropriate package manager
-5. **Verifies** everything works (runs functional tests)
-6. **Reports** completion
+## 🛡️ Safety Features
 
-## Safety Features
+- **VM snapshots** before any changes
+- **System state backups** for remote servers
+- **Checkpoint at every critical step**
+- **Automatic rollback** on failures
+- **Never leaves systems in broken state**
+- **Logs all actions** for debugging
 
-- VM snapshots before changes
-- System state backups
-- Checkpoint at every critical step
-- Can rollback on failures
-- Never leaves system in broken state
+## ⚙️ Requirements
 
-## Requirements
+- **Any OS**: Linux, macOS, Windows/WSL
+- **For VMs**: VirtualBox, VMware, or Parallels
+- **For Remote**: SSH access (auto-configured if needed)
+- **For GPU**: NVIDIA GPU (drivers auto-installed)
 
-- **For VMs**: VirtualBox, VMware, or Parallels installed
-- **For Remote**: SSH access (will configure keys automatically)
-- **For GPU**: NVIDIA GPU (will detect and install drivers)
-
-## AI Tool Compatibility
-
-### Claude Code
-Install as a skill in `~/.claude/skills/auto-installer/`
-
-### Aider
-```bash
-cd auto-installer
-aider
-# Say: "Read SKILL.md and install docker"
-```
-
-### ChatGPT CLI / GPT-Engineer
-```bash
-chatgpt --context SKILL.md
-# Say: "install pytest"
-```
-
-### Codex / GitHub Copilot
-Paste the prompt from "Option C" above
-
-### Custom AI Tools
-Any AI with shell access can use this. Just ensure it reads SKILL.md first.
-
-## File Structure
-
-```
-auto-installer/
-├── SKILL.md          # Complete installation logic and capabilities
-├── README.md         # This file
-├── EXAMPLES.md       # Real-world usage examples
-├── CONTRIBUTING.md   # How to contribute
-├── CHANGELOG.md      # Version history
-└── LICENSE           # MIT License
-```
-
-## Advanced Usage
-
-### For Multi-Package Installations
-```
-install docker, node 20, postgresql, redis, and python testing tools
-```
-
-The AI will:
-- Clarify "python testing tools" (pytest? full suite?)
-- Install everything in optimal order
-- Configure all services
-- Verify each package
-
-### For Production Servers
-```
-install docker on prod-server.example.com
-```
-
-The AI will:
-- Create system backups first
-- Install packages
-- Start services
-- Run verification tests
-- Keep backups until success confirmed
-
-### For GPU Servers
-```
-install docker with nvidia GPU support and pytorch with CUDA on gpu-server
-```
-
-The AI will:
-- Detect GPU hardware
-- Install NVIDIA drivers
-- Reboot if needed
-- Poll until server returns
-- Install nvidia-docker
-- Install PyTorch with correct CUDA version
-- Verify GPU access works
-
-## Troubleshooting
+## 🔍 Troubleshooting
 
 **AI asks me to run commands manually:**
 - Emphasize: "Execute everything yourself. I cannot run commands."
@@ -230,7 +221,61 @@ The AI will:
 - Verify YAML frontmatter is valid
 - Say explicitly: "use auto-installer skill to install XYZ"
 
-## Contributing
+**Installation logs:**
+- Check: `/var/log/apt/`, `~/.npm/_logs/`, `~/.pip/`
+- All bash commands are logged by Claude/AI tools
+- Use `history` to review executed commands
+
+## 📁 File Structure
+
+```
+auto-installer/
+├── SKILL.md          # Complete installation logic (AI reads this)
+├── README.md         # This file (for humans)
+├── EXAMPLES.md       # Real-world usage examples
+├── CONTRIBUTING.md   # How to contribute
+├── CHANGELOG.md      # Version history
+└── LICENSE           # MIT License
+```
+
+## 🚀 Advanced Usage
+
+### Multi-Package Installations
+```
+install docker, node 20, postgresql, redis, and python testing tools
+```
+
+The AI will:
+- Clarify ambiguities ("python testing tools" → pytest only? full suite?)
+- Install everything in optimal dependency order
+- Configure and start all services
+- Verify each package works
+
+### Production Deployments
+```
+install docker on prod-server.example.com
+```
+
+The AI will:
+- Create system backups first
+- Install packages with minimal downtime
+- Start and verify services
+- Keep backups until success confirmed
+
+### GPU Servers
+```
+install docker with nvidia GPU support and pytorch with CUDA on gpu-server
+```
+
+The AI will:
+- Detect GPU hardware
+- Install NVIDIA drivers
+- Reboot server and poll until back online
+- Install nvidia-docker
+- Install PyTorch with matching CUDA version
+- Verify GPU access with test container
+
+## 🤝 Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
 - Reporting bugs
@@ -238,23 +283,29 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
 - Submitting improvements
 - Testing new scenarios
 
-## License
+## 📜 License
 
 MIT License - Use freely with any AI tool
 
-## Philosophy
+## 💭 Philosophy
 
 **Core Principles:**
-- Correctness > Speed
-- Safety > Convenience
-- Autonomy > User interaction
-- Transparency > Abstraction
-- Robustness > Simplicity
+- **Correctness > Speed** - Do it right, not fast
+- **Safety > Convenience** - Checkpoints before changes
+- **Autonomy > User interaction** - ZERO manual commands
+- **Transparency > Abstraction** - Clear logs and reports
+- **Robustness > Simplicity** - Handle edge cases
 
 **Design Goals:**
 - ZERO manual commands for the user
-- Only ask for passwords, disambiguation, or risky operation confirmations
+- Only ask for: passwords, disambiguation, risky confirmations
 - Always verify installations actually work
 - Create safety checkpoints before changes
 - Recover from errors automatically
 - Never leave systems in broken state
+
+---
+
+**Made with ❤️ for the AI coding community**
+
+**Supports**: Claude Code • Open Codex • Gemini CLI • Grok CLI • Continue.dev • Aider • and more
