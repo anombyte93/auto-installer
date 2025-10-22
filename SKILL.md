@@ -29,14 +29,27 @@ You are an autonomous software installer. When the user requests installation of
 ## Activation Triggers
 
 This skill activates when user says:
-- "install XYZ"
+- "install XYZ" (ANY package/tool/config)
 - "install X, Y, and Z"
 - "install docker on my VM"
 - "install node 20 and postgres on staging and prod"
 - "install python ML stack on my GPU server behind bastion"
+- "configure Gemini API in codex"
+- "set up my API keys"
 - "I need pytest"
+- "install npm package open-codex"
 - "set up rust"
 - "get me the latest terraform"
+- "install VSCode extensions"
+
+## LOGGING AND TROUBLESHOOTING
+
+**ALWAYS log your actions for debugging:**
+- All bash commands are automatically logged by Claude
+- If errors occur, reference previous bash output in the session
+- Use `history` command to review what was executed
+- Check installation logs: `/var/log/apt/`, `~/.npm/_logs/`, `~/.pip/`, etc.
+- For failed installations, examine logs before retrying
 
 ## EXECUTION WORKFLOW
 
@@ -424,25 +437,120 @@ Report when complete with versions."
 
 ## PACKAGE KNOWLEDGE DATABASE
 
-**Use this to identify package types:**
+**Use this to identify package types - this is NOT exhaustive, use AI to detect ANY installation type:**
 
-### System Packages (install via apt/brew/choco)
+### System Packages (install via apt/brew/choco/dnf/pacman)
 docker, postgresql, redis, nginx, git, curl, vim, build-essential, gcc, mysql, mariadb, mongodb, cassandra, elasticsearch
 
-### Python Packages (install via pip3)
-pytest, numpy, pandas, flask, django, requests, matplotlib, scikit-learn, torch, tensorflow, jupyter
+### Python Packages (install via pip3/pipx/poetry)
+```bash
+pip3 install <package>
+pipx install <package>  # For CLI tools
+poetry add <package>     # For poetry projects
+```
 
-### Node Packages (install system nodejs first, then use npm)
-react, express, typescript, webpack, next, vue, angular
+### Node/NPM Packages (install via npm/yarn/pnpm/bun)
+```bash
+npm install -g <package>  # Global
+npm install <package>     # Local
+yarn global add <package>
+pnpm add -g <package>
+bun add <package>
+```
+**Examples:** open-codex, typescript, eslint, prettier, next, react
 
-### Rust (install via rustup)
-Any rust-related request
+### Ruby Gems (install via gem/bundler)
+```bash
+gem install <package>
+bundle add <package>  # For bundler projects
+```
+
+### Rust Crates (install via cargo/rustup)
+```bash
+rustup install stable
+cargo install <package>
+```
+
+### Go Packages (install via go get/go install)
+```bash
+go install github.com/user/package@latest
+```
+
+### PHP Packages (install via composer)
+```bash
+composer global require <package>
+composer require <package>  # For projects
+```
+
+### Perl Modules (install via cpan)
+```bash
+cpan <module>
+```
+
+### Java/Maven/Gradle
+```bash
+# Maven
+mvn install
+# Gradle
+gradle build
+```
+
+### Configuration Tasks (API keys, env vars, config files)
+```bash
+# Set environment variables
+echo 'export API_KEY="value"' >> ~/.bashrc
+export API_KEY="value"
+
+# Create config files
+mkdir -p ~/.config/tool
+cat > ~/.config/tool/config.json <<EOF
+{"key": "value"}
+EOF
+
+# Edit existing configs
+# Use Read + Edit tools for TOML/JSON/YAML configs
+```
+
+### VSCode/IDE Extensions
+```bash
+code --install-extension <extension-id>
+```
+
+### Browser Extensions (Chrome/Firefox)
+- Guide user to install manually (can't automate)
+- Provide direct install URLs
+
+### Desktop Applications
+```bash
+# Snap
+snap install <app>
+
+# Flatpak
+flatpak install <app>
+
+# AppImage
+wget <url> && chmod +x <file>
+
+# Homebrew Cask (macOS)
+brew install --cask <app>
+```
+
+### Development Tools
+```bash
+# SDKs (Java, Android, etc.)
+# Follow official installation scripts
+
+# Version managers
+nvm install <version>  # Node
+pyenv install <version>  # Python
+rbenv install <version>  # Ruby
+```
 
 ### Ambiguous (ASK USER)
 - "docker" → Ask: docker.io (CLI) or docker-desktop (GUI)?
 - "python" → Ask: python3, python3-dev, or python-is-python3?
-- "python testing tools" → Ask: pytest only or full suite (pytest+cov+xdist+tox)?
-- "python ML stack" → Ask: Basic (numpy+pandas) or PyTorch or TensorFlow or Full?
+- "codex" → Ask: @openai/codex or open-codex?
+- "API configuration" → Ask: which API and which tool?
 
 ## VERSION DETECTION
 
