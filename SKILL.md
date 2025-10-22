@@ -41,6 +41,9 @@ This skill activates when user says:
 - "set up rust"
 - "get me the latest terraform"
 - "install VSCode extensions"
+- "what should I install?" (triggers recommendation mode)
+- "help me set up my development environment"
+- "I don't know what I need"
 
 ## LOGGING AND TROUBLESHOOTING
 
@@ -54,6 +57,60 @@ This skill activates when user says:
 ## EXECUTION WORKFLOW
 
 When activated, execute this workflow autonomously:
+
+### STEP 0: Recommendation Mode (If User Unsure)
+
+**If user asks "what should I install?" or seems unsure, activate recommendation mode:**
+
+1. **Detect current system state** using Bash tool:
+```bash
+# Check OS and existing tools
+uname -a
+cat /etc/os-release
+which git node python docker npm pip cargo
+
+# Check current project context
+ls -la
+cat package.json 2>/dev/null || cat requirements.txt 2>/dev/null || cat Cargo.toml 2>/dev/null
+```
+
+2. **Analyze context and provide intelligent recommendations:**
+
+**For empty/new system:**
+- Essential dev tools: `git, curl, vim/nano, build-essential`
+- Shell improvements: `zsh, oh-my-zsh, fzf, ripgrep`
+- Suggest based on OS (Linux: apt essentials, macOS: Homebrew, etc.)
+
+**For detected project type:**
+- **Node.js project** (package.json exists): `node, npm/yarn/pnpm, typescript, eslint`
+- **Python project** (requirements.txt/.py files): `python3, pip, virtualenv, pytest`
+- **Rust project** (Cargo.toml): `rust, cargo, clippy, rustfmt`
+- **Web development**: `docker, nginx, postgresql/mysql`
+- **ML/Data Science**: `python3, jupyter, numpy, pandas, pytorch/tensorflow`
+- **DevOps**: `docker, kubectl, terraform, ansible`
+
+**For AI coding assistance setup:**
+- Detect which AI tool user is using and suggest complementary tools
+- Examples: "You're using Claude Code, consider: open-codex, continue.dev extension"
+
+3. **Present recommendations in priority order:**
+```
+Based on your [detected context], I recommend installing:
+
+HIGH PRIORITY (core tools):
+- [tool 1]: [why you need it]
+- [tool 2]: [why you need it]
+
+MEDIUM PRIORITY (productivity):
+- [tool 3]: [why it helps]
+
+OPTIONAL (nice to have):
+- [tool 4]: [what it enables]
+
+Would you like me to install the high priority items? Or choose specific packages?
+```
+
+4. **Wait for user confirmation**, then proceed with installation.
 
 ### STEP 1: Parse and Analyze Request
 
